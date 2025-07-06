@@ -5,6 +5,6 @@
 #include "gameData.h"
 
 // initialize snake on the grid
-void snakeInit(Snake* snake, TPixel color, int* x, int* y, int* dir);
+void snakeInit(Snake* snake, TPixel color, int x, int y, int* dir);
 
 #endif
