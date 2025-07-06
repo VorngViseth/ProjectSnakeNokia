@@ -14,13 +14,13 @@ draw grid
 
 in main
 MENU : 
-    if click 1 Singleplayer -> GameState = SINGLE_PLAYER
-    if click 2 Multiplayer -> GameState = MULTI_PLAYER
-    if click esc exit the game
+if click 1 Singleplayer -> GameState = SINGLE_PLAYER
+if click 2 Multiplayer -> GameState = MULTI_PLAYER
+if click esc exit the game
 SINGLE_PLAYER :
-    TigrClear(screen);
-    user input : W = 0, S = 2, A = 3, D = 1;    0 up, 2 down, 3 left, 4 right
-    snakeProperty
-    check collision
-    eatFood
-    drawGame
+TigrClear(screen);
+user input : W = 0, S = 2, A = 3, D = 1;    0 up, 2 down, 3 left, 4 right
+snakeProperty
+check collision
+eatFood
+drawGame

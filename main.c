@@ -13,6 +13,10 @@ int main() {
     Snake snake1, snake2;
     Object food, boom, specialFood;
 
+    AudioSystem audio;
+    init_audio(&audio);
+    bool bmg_play = false;
+
     float timer = 0;
     const float delay = 0.1f;
     bool multiplayer = false; 
@@ -22,6 +26,11 @@ int main() {
     
     while(!tigrClosed(screen)){
         float deltaTime = tigrTime();
+
+        if(!bmg_play) {
+            play_bgm(&audio, "asset/SnakeNokiaSongTrack.mp3");
+            bmg_play = true;
+        }
 
         switch (gameState){
             case MENU :

@@ -17,3 +17,18 @@ void snakeInit(Snake* snake, TPixel color, int* x, int* y, int* dir){
         snake->body[i].y = y + i;
     }
 }
+
+void snakeProperty(Snake* snake) {
+    if(!snake->alive) return;
+
+    snake->direction = snake->newDirection;
+    snake->moved = true;
+
+    for(int i = snake->length-1; i > 0; i++) snake->body[i] = snake->body[i+1];
+
+    switch(snake->direction){
+        case 0 : snake->body[0].y-- ;
+        case 1 : snake->body[0].x++ ;
+        
+    }
+}
