@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "tigr.h"
 #include "miniaudio.h"
@@ -28,6 +29,8 @@ int main() {
 
     snakeInit(&snake1, tigrRGB(0,200,0), WINDOW_WIDTH/2-5, WINDOW_HIGHT/2, &dir1);
     snakeInit(&snake2, tigrRGB(0,0,200), WINDOW_WIDTH/2+5, WINDOW_HIGHT/2, &dir2);
+
+    bool print = false;
     
     while(!tigrClosed(screen)){
         float deltaTime = tigrTime();
@@ -42,10 +45,17 @@ int main() {
                 menuState(screen, &gameState);
             break;
             case SINGLE_PLAYER :
+                if(!print){
+                    printf("You are in single player\n");
+                    print = true;
+                }
 
             break;
             case MULTI_PLAYER :
-
+                if(!print){
+                    printf("You are in Multi player\n");
+                    print = true;
+                }
             break;
             case GAME_OVER :
             
