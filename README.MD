@@ -19,10 +19,11 @@ MENU :
 if click 1 Singleplayer -> GameState = SINGLE_PLAYER
 if click 2 Multiplayer -> GameState = MULTI_PLAYER
 if click esc exit the game
-SINGLE_PLAYER :
+SINGLE_PLAYER : if 
 TigrClear(screen);
 user input : W = 0, S = 2, A = 3, D = 1;    0 up, 2 down, 3 left, 4 right
 snakeProperty
 check collision
 eatFood
 drawGame
+MULTIPLAYER : check collision between wall and snakes only, if snake1 head hit snake2 body snake2 will win even if snake1 have more score, but if both of the snakes head hit eachother the game will decide the winner on point
