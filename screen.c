@@ -3,24 +3,15 @@
 #include "screen.h"
 #include "gameData.h"
 
-void drawMenu(Tigr* screen){
+void menuState(Tigr* screen, GameState* gameState) {
     tigrClear(screen, tigrRGB(0,0,0));
 
-    int textWidth = tigrTextWidth(tfont, "SNAKE NOKIA");
-    tigrPrint(screen, tfont, (WINDOW_WIDTH-textWidth)/2, WINDOW_HIGHT/3, tigrRGB(0,255,0), "SNAKE NOKIA");
+    Tigr* menuPicture = tigrLoadImage("asset/SnakeMenu.png");
+    
+    int x = (screen->w - menuPicture->w) / 2;
+    int y = (screen->h - menuPicture->h) / 2;
 
-    textWidth = tigrTextWidth(tfont, "1. Single Player");
-    tigrPrint(screen, tfont, (WINDOW_WIDTH-textWidth)/2, WINDOW_HIGHT/2, tigrRGB(0,200,100), "1. Single Player");
-
-    textWidth = tigrTextWidth(tfont, "2. Multi Player");
-    tigrPrint(screen, tfont, (WINDOW_WIDTH-textWidth)/2, WINDOW_HIGHT/2+40, tigrRGB(0,200,100), "2. Multi Player");
-
-    textWidth = tigrTextWidth(tfont, "click esc to exit the game");
-    tigrPrint(screen, tfont, (WINDOW_WIDTH-textWidth)/2, WINDOW_HIGHT/2+80, tigrRGB(200,200,100), "click esc to exit the game");
-}
-
-void menuState(Tigr* screen, GameState* gameState) {
-    drawMenu(screen);
+    tigrBlit(screen, menuPicture, x, y, 0, 0, menuPicture->w, menuPicture->h);
 
     if(tigrKeyDown(screen, '1')) *gameState = SINGLE_PLAYER;
     else if(tigrKeyDown(screen, '2')) *gameState = MULTI_PLAYER;
@@ -28,4 +19,6 @@ void menuState(Tigr* screen, GameState* gameState) {
         tigrFree(screen);
         exit(0);
     } 
+
+    tigrFree(menuPicture);
 }
