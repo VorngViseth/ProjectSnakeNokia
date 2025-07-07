@@ -47,6 +47,7 @@ int main() {
             case SINGLE_PLAYER :
                 if(!print){
                     printf("You are in single player\n");
+                    printf("You are in single player\n");
                     print = true;
                 }
 
