@@ -7,10 +7,10 @@
 #include <stdbool.h>
 
 #define CELL_SIZE 20
-#define GRID_HIGHT 30
+#define GRID_HIGHT 40
 #define GRID_WIDTH 40
-#define WINDOW_HIGHT (GRID_HIGHT*GRID_WIDTH)
-#define WINDOW_WIDTH (GRID_HIGHT*GRID_WIDTH)
+#define WINDOW_HIGHT (CELL_SIZE*GRID_WIDTH)
+#define WINDOW_WIDTH (CELL_SIZE*GRID_WIDTH)
 
 typedef enum {
     MENU,
@@ -35,11 +35,14 @@ typedef struct {
     bool alive;
     bool moved;
     float delay;
+    float specailEffectDuration;
 } Snake;
 
 typedef struct {
     Position objPosition;
     bool eaten;
+    float spawnTime;
+    float lifeTime;
 } Object;
 
 typedef struct {
@@ -50,8 +53,12 @@ typedef struct {
     AudioSystem audio;
     bool bmg_play;
     float timer;
+    float deltaTime;
     bool multiplayer;
     bool print;
+    float boomSpawnTimer;
+    float specialFoodspawnTimer;
+    float originalDelay;
 } Game;
 
 #endif

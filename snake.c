@@ -58,17 +58,17 @@ void move(Tigr* screen, Snake* snake1, Snake* snake2) {
     // up = 0, down = 2, left = 3, right = 1
 
     // move snake 1 : WASD  
-    if(tigrKeyDown(screen, 'W') && snake1->direction != 2) snake1->newDirection = 0;
-    if(tigrKeyDown(screen, 'D') && snake1->direction != 3) snake1->newDirection = 1; 
-    if(tigrKeyDown(screen, 'S') && snake1->direction != 0) snake1->newDirection = 2;
-    if(tigrKeyDown(screen, 'A') && snake1->direction != 1) snake1->newDirection = 3;
+    if(tigrKeyHeld(screen, 'W') && snake1->direction != 2) snake1->newDirection = 0;
+    if(tigrKeyHeld(screen, 'D') && snake1->direction != 3) snake1->newDirection = 1; 
+    if(tigrKeyHeld(screen, 'S') && snake1->direction != 0) snake1->newDirection = 2;
+    if(tigrKeyHeld(screen, 'A') && snake1->direction != 1) snake1->newDirection = 3;
 
     if(snake2 != NULL) {
         // move snake 2 : arrow keys  
-        if(tigrKeyDown(screen, TK_UP) && snake2->direction != 2) snake2->newDirection = 0;
-        if(tigrKeyDown(screen, TK_RIGHT) && snake2->direction != 3) snake2->newDirection = 1;
-        if(tigrKeyDown(screen, TK_DOWN) && snake2->direction != 0) snake2->newDirection = 2;
-        if(tigrKeyDown(screen, TK_LEFT) && snake2->direction != 1) snake2->newDirection = 3;
+        if(tigrKeyHeld(screen, TK_UP) && snake2->direction != 2) snake2->newDirection = 0;
+        if(tigrKeyHeld(screen, TK_RIGHT) && snake2->direction != 3) snake2->newDirection = 1;
+        if(tigrKeyHeld(screen, TK_DOWN) && snake2->direction != 0) snake2->newDirection = 2;
+        if(tigrKeyHeld(screen, TK_LEFT) && snake2->direction != 1) snake2->newDirection = 3;
 
     }
 }
@@ -82,6 +82,7 @@ void snakeInit(Snake* snake, TPixel color, int x, int y, int* dir){
     snake->direction = *dir;
     snake->newDirection = *dir;
     snake->delay = 0.1f;
+    snake->specailEffectDuration = 0.0f;
 
     // snake face up and the body is extending down at the start
     for(int i = 0; i < snake->length; i++){

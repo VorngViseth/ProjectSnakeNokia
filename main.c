@@ -21,22 +21,35 @@ void initGame(Tigr* screen, Game* game){
     game->multiplayer = false; 
     game->print = false;
 
+    game->food.eaten = true;
+    game->boom.eaten = true;
+    game->specialFood.eaten = true;
+    
+    srand(time(NULL));  
+    game->boomSpawnTimer = rand()%20 + 10; // 10 - 29 secs
+    game->specialFoodspawnTimer = rand()%20 + 10; // 10-29 secs
+
     init_audio(&game->audio);
-    snakeInit(&game->snake1, tigrRGB(0,200,0), WINDOW_WIDTH/2-5, WINDOW_HIGHT/2, &game->dir1);
-    snakeInit(&game->snake2, tigrRGB(0,0,200), WINDOW_WIDTH/2+5, WINDOW_HIGHT/2, &game->dir2);
+
+    int centerX = GRID_WIDTH / 2;
+    int centerY = GRID_HIGHT / 2;
+
+    snakeInit(&game->snake1, tigrRGB(0,200,0), centerX - 5, centerY, &game->dir1);
+    snakeInit(&game->snake2, tigrRGB(0,0,200), centerX + 5, centerY, &game->dir2);
+
+    game->originalDelay = game->snake1.delay;
 }
 
 int main() {
 
-    srand(time(NULL));
-
-    Tigr* screen = tigrWindow(WINDOW_WIDTH, WINDOW_HIGHT, "PROJECT SNAKE NOKIA", 0);
+    Tigr* screen = tigrWindow(WINDOW_WIDTH, WINDOW_HIGHT, "PROJECT SNAKE NOKIA", TIGR_FIXED);
     Game game;
 
     initGame(screen, &game);
     
     while(!tigrClosed(screen)){
-        float deltaTime = tigrTime();
+        game.deltaTime = tigrTime();
+
 
         if(!game.bmg_play) {
             play_bgm(&game.audio, "asset/SnakeNokiaSongTrack.mp3");
@@ -49,20 +62,19 @@ int main() {
                 menuState(screen, &game.gameState);
             break;
             case SINGLE_PLAYER :
-                if(!game.print){
-                    printf("You are in single player\n");
-                    game.print = true;
-                }
-
+                // singlePlayer(&game, &game.gameState ,screen, &game.snake1, NULL, &game.food, &game.boom, &game.specialFood,&game.multiplayer);                
+                singlePlayer(&game, screen);
             break;
             case MULTI_PLAYER :
                 if(!game.print){
+                    printf("gamestate : %d\n", game.gameState);
                     printf("You are in Multi player\n");
                     game.print = true;
                 }
             break;
             case GAME_OVER :
-            
+                tigrPrint(screen, tfont, 100, 100, tigrRGB(255,255,255), "SINGLE PLAYER MODE");
+
             break;
         }
 
