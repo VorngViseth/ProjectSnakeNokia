@@ -6,6 +6,35 @@
 #include "snake.h"
 #include "object.h"
 
+void drawGameOver(Tigr* screen, Game* game) {
+    char gameOverText[64];
+    if (game->multiplayer) {
+        if (!game->snake1.alive && !game->snake2.alive) {
+            snprintf(gameOverText, sizeof(gameOverText), "DRAW! Scores: %d-%d", game->snake1.score, game->snake2.score);
+        } else if (!game->snake1.alive) {
+            snprintf(gameOverText, sizeof(gameOverText), "PLAYER 2 WINS! %d-%d", game->snake1.score, game->snake2.score);
+        } else {
+            snprintf(gameOverText, sizeof(gameOverText), "PLAYER 1 WINS! %d-%d", game->snake1.score, game->snake2.score);
+        }
+    } else {
+        snprintf(gameOverText, sizeof(gameOverText), "GAME OVER! Score: %d", game->snake1.score);
+    }
+    
+    int tw = tigrTextWidth(tfont, gameOverText);
+    tigrPrint(screen, tfont, (WINDOW_WIDTH-tw)/2, WINDOW_HIGHT/2 - 30, 
+             tigrRGB(255, 50, 50), gameOverText);
+    
+    const char* restartText = "Press SPACE to return to menu";
+    tw = tigrTextWidth(tfont, restartText);
+    tigrPrint(screen, tfont, (WINDOW_WIDTH-tw)/2, WINDOW_HIGHT/2 + 10,
+             tigrRGB(200, 200, 200), restartText);
+
+    const char* exitText = "Press esc to exit the game";
+    tw = tigrTextWidth(tfont, exitText);
+    tigrPrint(screen, tfont, (WINDOW_WIDTH-tw)/2, WINDOW_HIGHT/2 + 20,
+                tigrRGB(250,50,50), exitText);
+}
+
 void drawBorder(Tigr* screen){
     TPixel borderColor = tigrRGB(255, 20, 20);
 
@@ -123,4 +152,18 @@ void singlePlayer(Game* game, Tigr* screen) {
         drawGame(screen, game);
     }
 
+}
+
+void gameOver(Game*game, Tigr* screen){
+    tigrClear(screen, tigrRGB(0,0,0));
+
+    if(game->bmg_play) game->bmg_play = false;
+
+    drawGameOver(screen, game);
+    
+    if(tigrKeyDown(screen, TK_SPACE)) game->gameState = MENU;
+    else if(tigrKeyDown(screen, TK_ESCAPE)) {
+        tigrFree(screen);
+        exit(0);
+    } 
 }

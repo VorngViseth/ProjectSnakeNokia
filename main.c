@@ -40,6 +40,21 @@ void initGame(Tigr* screen, Game* game){
     game->originalDelay = game->snake1.delay;
 }
 
+void changeBGMIfNeeded(Game* game) {
+    static GameState lastState = -1;
+
+    if (game->gameState != lastState) {
+        stop_bgm(&game->audio);  // Stop current music
+
+        const char* track = (game->gameState == GAME_OVER)
+            ? "asset/snakeGameOver.mp3"
+            : "asset/SnakeNokiaSongTrack.mp3";
+
+        play_bgm(&game->audio, track);
+        lastState = game->gameState;
+    }
+}
+
 int main() {
 
     Tigr* screen = tigrWindow(WINDOW_WIDTH, WINDOW_HIGHT, "PROJECT SNAKE NOKIA", TIGR_FIXED);
@@ -50,11 +65,7 @@ int main() {
     while(!tigrClosed(screen)){
         game.deltaTime = tigrTime();
 
-
-        if(!game.bmg_play) {
-            play_bgm(&game.audio, "asset/SnakeNokiaSongTrack.mp3");
-            game.bmg_play = true;
-        }
+        changeBGMIfNeeded(&game);
 
         switch (game.gameState){
             case MENU :
@@ -73,13 +84,13 @@ int main() {
                 }
             break;
             case GAME_OVER :
-                tigrPrint(screen, tfont, 100, 100, tigrRGB(255,255,255), "SINGLE PLAYER MODE");
-
+                gameOver(&game, screen);
             break;
         }
 
         tigrUpdate(screen);
     }
 
+    shutdown_audio(&game.audio);
     return 0;
 }
