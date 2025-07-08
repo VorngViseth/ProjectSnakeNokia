@@ -3,6 +3,7 @@
 
 #include "tigr.h"
 #include "miniaudio.h"
+#include "audio.h"
 #include <stdbool.h>
 
 #define CELL_SIZE 20
@@ -29,6 +30,7 @@ typedef struct {
     int direction;
     int newDirection;
     TPixel color;
+    int health;
     int score;
     bool alive;
     bool moved;
@@ -40,7 +42,7 @@ typedef struct {
     bool eaten;
 } Object;
 
-typedef struct{
+typedef struct {
     Snake snake1, snake2;
     Object food, boom, specialFood;
     GameState gameState;
