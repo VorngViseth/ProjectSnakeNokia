@@ -2,6 +2,7 @@
 #define GAMEDATA_H
 
 #include "tigr.h"
+#include "miniaudio.h"
 #include <stdbool.h>
 
 #define CELL_SIZE 20
@@ -28,15 +29,27 @@ typedef struct {
     int direction;
     int newDirection;
     TPixel color;
-    int health;
     int score;
     bool alive;
     bool moved;
+    float delay;
 } Snake;
 
 typedef struct {
     Position objPosition;
     bool eaten;
 } Object;
+
+typedef struct{
+    Snake snake1, snake2;
+    Object food, boom, specialFood;
+    GameState gameState;
+    int dir1, dir2;
+    AudioSystem audio;
+    bool bmg_play;
+    float timer;
+    bool multiplayer;
+    bool print;
+} Game;
 
 #endif

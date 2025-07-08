@@ -2,6 +2,26 @@
 
 #include "screen.h"
 #include "gameData.h"
+#include "snake.h"
+
+void drawGrid(Tigr* screen){
+    for(int x = 0; x < WINDOW_WIDTH; x++) tigrLine(screen, x, 0, x, WINDOW_HIGHT, tigrRGB(30,30,30));
+    for(int y = 0; y < WINDOW_HIGHT; y++) tigrLine(screen, 0, y, WINDOW_HIGHT, y, tigrRGB(30,30,30));
+}
+
+void drawFood(Tigr* screen, Object* food) {
+    if(!food->eaten) {
+        tigrFill(screen, food->objPosition.x*CELL_SIZE, food->objPosition.y*CELL_SIZE, CELL_SIZE, CELL_SIZE, tigrRGB(230,10,0));
+    }
+}
+
+void drawSnake(Tigr*screen, Snake* snake);
+
+void drawGame(Snake* snake1, Snake* snake2, Tigr* screen, Object* food, bool multiplayer) {
+    drawGrid(screen);
+    drawFood(screen, food);
+
+}
 
 void menuState(Tigr* screen, GameState* gameState) {
     tigrClear(screen, tigrRGB(0,0,0));
@@ -21,4 +41,9 @@ void menuState(Tigr* screen, GameState* gameState) {
     } 
 
     tigrFree(menuPicture);
+}
+
+void singlePlayer(Tigr* screen, Snake* snake1, Snake* snake2) {
+    tigrClear(screen, tigrRGB(0,0,0));
+
 }

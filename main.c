@@ -10,51 +10,55 @@
 #include "snake.h"
 #include "screen.h"
 
+void initGame(Tigr* screen, Game* game){
+    game->gameState = MENU;
+
+    game->dir1 = 0;
+    game->dir2 = 0;
+
+    game->bmg_play = false;
+    game->timer = 0;
+    game->multiplayer = false; 
+    game->print = false;
+
+    init_audio(&game->audio);
+    snakeInit(&game->snake1, tigrRGB(0,200,0), WINDOW_WIDTH/2-5, WINDOW_HIGHT/2, &game->dir1);
+    snakeInit(&game->snake2, tigrRGB(0,0,200), WINDOW_WIDTH/2+5, WINDOW_HIGHT/2, &game->dir2);
+}
+
 int main() {
+
     srand(time(NULL));
+
     Tigr* screen = tigrWindow(WINDOW_WIDTH, WINDOW_HIGHT, "PROJECT SNAKE NOKIA", 0);
-    GameState gameState = MENU;
-    Snake snake1, snake2;
-    Object food, boom, specialFood;
-    int dir1 = snake1.direction;
-    int dir2 = snake2.direction;
+    Game game;
 
-    AudioSystem audio;
-    init_audio(&audio);
-    bool bmg_play = false;
-
-    float timer = 0;
-    const float delay = 0.1f;
-    bool multiplayer = false; 
-
-    snakeInit(&snake1, tigrRGB(0,200,0), WINDOW_WIDTH/2-5, WINDOW_HIGHT/2, &dir1);
-    snakeInit(&snake2, tigrRGB(0,0,200), WINDOW_WIDTH/2+5, WINDOW_HIGHT/2, &dir2);
-
-    bool print = false;
+    initGame(screen, &game);
     
     while(!tigrClosed(screen)){
         float deltaTime = tigrTime();
 
-        if(!bmg_play) {
-            play_bgm(&audio, "asset/SnakeNokiaSongTrack.mp3");
-            bmg_play = true;
+        if(!game.bmg_play) {
+            play_bgm(&game.audio, "asset/SnakeNokiaSongTrack.mp3");
+            game.bmg_play = true;
         }
 
-        switch (gameState){
+        switch (game.gameState){
             case MENU :
-                menuState(screen, &gameState);
+                game.print = false;
+                menuState(screen, &game.gameState);
             break;
             case SINGLE_PLAYER :
-                if(!print){
+                if(!game.print){
                     printf("You are in single player\n");
-                    print = true;
+                    game.print = true;
                 }
 
             break;
             case MULTI_PLAYER :
-                if(!print){
+                if(!game.print){
                     printf("You are in Multi player\n");
-                    print = true;
+                    game.print = true;
                 }
             break;
             case GAME_OVER :

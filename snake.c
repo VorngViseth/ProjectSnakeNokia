@@ -81,6 +81,7 @@ void snakeInit(Snake* snake, TPixel color, int x, int y, int* dir){
     snake->moved = false;
     snake->direction = *dir;
     snake->newDirection = *dir;
+    snake->delay = 0.1f;
 
     // snake face up and the body is extending down at the start
     for(int i = 0; i < snake->length; i++){
