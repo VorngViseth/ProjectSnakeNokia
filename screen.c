@@ -27,11 +27,11 @@ void drawGameOver(Tigr* screen, Game* game) {
     const char* restartText = "Press SPACE to return to menu";
     tw = tigrTextWidth(tfont, restartText);
     tigrPrint(screen, tfont, (WINDOW_WIDTH-tw)/2, WINDOW_HIGHT/2 + 10,
-             tigrRGB(200, 200, 200), restartText);
+             tigrRGB(250, 50, 50), restartText);
 
     const char* exitText = "Press esc to exit the game";
     tw = tigrTextWidth(tfont, exitText);
-    tigrPrint(screen, tfont, (WINDOW_WIDTH-tw)/2, WINDOW_HIGHT/2 + 20,
+    tigrPrint(screen, tfont, (WINDOW_WIDTH-tw)/2, WINDOW_HIGHT/2 + 60,
                 tigrRGB(250,50,50), exitText);
 }
 
@@ -87,6 +87,36 @@ void drawGame(Tigr* screen, Game* game) {
 
     drawScoreBoard(screen, &game->snake1, 10, 10);
     if(&game->snake2 && game->multiplayer && &game->snake2.alive) drawScoreBoard(screen, &game->snake2, GRID_WIDTH-60, 10);
+}
+
+void initGame(Tigr* screen, Game* game){
+    game->gameState = MENU;
+
+    game->dir1 = 0;
+    game->dir2 = 0;
+
+    game->bmg_play = false;
+    game->timer = 0;
+    game->multiplayer = false; 
+    game->print = false;
+
+    game->food.eaten = true;
+    game->boom.eaten = true;
+    game->specialFood.eaten = true;
+    
+    srand(time(NULL));  
+    game->boomSpawnTimer = rand()%20 + 10; // 10 - 29 secs
+    game->specialFoodspawnTimer = rand()%20 + 10; // 10-29 secs
+
+    init_audio(&game->audio);
+
+    int centerX = GRID_WIDTH / 2;
+    int centerY = GRID_HIGHT / 2;
+
+    snakeInit(&game->snake1, tigrRGB(0,200,0), centerX - 5, centerY, &game->dir1);
+    snakeInit(&game->snake2, tigrRGB(0,0,200), centerX + 5, centerY, &game->dir2);
+
+    game->originalDelay = game->snake1.delay;
 }
 
 // below are all the main functions
@@ -157,11 +187,12 @@ void singlePlayer(Game* game, Tigr* screen) {
 void gameOver(Game*game, Tigr* screen){
     tigrClear(screen, tigrRGB(0,0,0));
 
-    if(game->bmg_play) game->bmg_play = false;
-
     drawGameOver(screen, game);
     
-    if(tigrKeyDown(screen, TK_SPACE)) game->gameState = MENU;
+    if(tigrKeyDown(screen, TK_SPACE)){
+        game->gameState = MENU;
+        initGame(screen, game);
+    }
     else if(tigrKeyDown(screen, TK_ESCAPE)) {
         tigrFree(screen);
         exit(0);

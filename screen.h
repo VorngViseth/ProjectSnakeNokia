@@ -12,4 +12,6 @@ void singlePlayer(Game* game, Tigr* screen);
 
 void gameOver(Game*game, Tigr* screen);
 
+void initGame(Tigr* screen, Game* game);
+
 #endif
