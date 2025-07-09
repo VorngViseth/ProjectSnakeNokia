@@ -31,11 +31,8 @@ int main() {
                 singlePlayer(&game, screen);
             break;
             case MULTI_PLAYER :
-                if(!game.print){
-                    printf("gamestate : %d\n", game.gameState);
-                    printf("You are in Multi player\n");
-                    game.print = true;
-                }
+                // singlePlayer(&game, &game.gameState ,screen, &game.snake1, &game.snake2, &game.food, &game.boom, &game.specialFood,&game.multiplayer);                
+                multiplayer(&game, screen);
             break;
             case GAME_OVER :
                 gameOver(&game, screen);
