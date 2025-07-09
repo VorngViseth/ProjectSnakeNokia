@@ -62,7 +62,7 @@ void drawObject(Tigr* screen, Object* object, TPixel objColor) {
 void drawSnake(Tigr*screen, Snake* snake){
     if(snake->alive){
         for(int i = 0; i < snake->length; i++) {
-            TPixel color = (i==0) ? tigrRGB(0,255,0) : snake->color;
+            TPixel color = snake->color;
             tigrFill(screen, snake->body[i].x*CELL_SIZE, snake->body[i].y*CELL_SIZE, CELL_SIZE, CELL_SIZE, color);
         }
     }

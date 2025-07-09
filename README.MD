@@ -1,6 +1,11 @@
 the snake body is following the one before it and the whole body is following the head 
-
+on linux :
 gcc main.c audio.c snake.c screen.c tigr.c object.c -o ./bin/snake -lm -lpthread -ldl -lGL -lX11 && ./bin/snake
+
+on window :
+gcc main.c audio.c snake.c screen.c tigr.c object.c -o ./bin/snake -lwinmm -lgdi32 -lopengl32
+then run :
+./bin/snake 
 
 snake have 3 lives
 snake die from eatng 3 booms
