@@ -37,6 +37,8 @@ typedef struct {
     bool moved;
     float delay;
     float specailEffectDuration;
+
+    float timer;
 } Snake;
 
 typedef struct {
@@ -53,7 +55,7 @@ typedef struct {
     int dir1, dir2;
     AudioSystem audio;
     bool bmg_play;
-    float timer;
+    
     float deltaTime;
     bool multiplayer;
     bool print;

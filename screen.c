@@ -114,7 +114,8 @@ void initGame(Tigr* screen, Game* game){
     game->dir2 = 0;
 
     game->bmg_play = false;
-    game->timer = 0;
+    game->snake1.timer = 0;
+    game->snake2.timer = 0;
     game->multiplayer = false; 
     game->print = false;
 
@@ -165,7 +166,7 @@ void singlePlayer(Game* game, Tigr* screen) {
     game->specialFoodspawnTimer -= game->deltaTime;
 
     // for counting time per frame to set how fast the snake can move per frame
-    game->timer += game->deltaTime;
+    game->snake1.timer += game->deltaTime;
 
     // counting how long since the obejct is spanwed 
     if(!game->boom.eaten) game->boom.spawnTime += game->deltaTime;
@@ -176,8 +177,8 @@ void singlePlayer(Game* game, Tigr* screen) {
     if(!game->specialFood.eaten && game->specialFood.spawnTime >= game->specialFood.lifeTime) game->specialFood.eaten = true;
 
     // the snake can move if the timer = delay (the snake speed)
-    if(game->timer >= game->snake1.delay) {
-        game->timer = 0;
+    if(game->snake1.timer >= game->snake1.delay) {
+        game->snake1.timer = 0;
 
         tigrClear(screen, tigrRGB(0,0,0)); // clear <-----
         
@@ -207,7 +208,8 @@ void multiplayer(Game* game, Tigr* screen) {
     game->specialFoodspawnTimer -= game->deltaTime;
 
     // for counting time per frame to set how fast the snake can move per frame
-    game->timer += game->deltaTime;
+    game->snake1.timer += game->deltaTime;
+    game->snake2.timer += game->deltaTime;
 
     // counting how long since the obejct is spanwed 
     if(!game->boom.eaten) game->boom.spawnTime += game->deltaTime;
@@ -217,35 +219,50 @@ void multiplayer(Game* game, Tigr* screen) {
     if(!game->boom.eaten && game->boom.spawnTime >= game->boom.lifeTime) game->boom.eaten = true;
     if(!game->specialFood.eaten && game->specialFood.spawnTime >= game->specialFood.lifeTime) game->specialFood.eaten = true;
 
+    tigrClear(screen, tigrRGB(0,0,0)); // clear <-----
+    game->multiplayer = true;
     // the snake can move if the timer = delay (the snake speed)
-    if(game->timer >= game->snake1.delay && game->timer >= game->snake2.delay) {
-        game->timer = 0;
-
-        tigrClear(screen, tigrRGB(0,0,0)); // clear <-----
-        
-        game->multiplayer = true;
+    if(game->snake1.timer >= game->snake1.delay ) {
+        game->snake1.timer = 0;
 
         placeObject(game);
 
-        move(screen, &game->snake1, &game->snake2);
         snakeProperty(&game->snake1);
-        snakeProperty(&game->snake2);
-        checkCollition(&game->snake1, &game->snake2, &game->multiplayer);
 
-        if(!game->snake1.alive || !game->snake2.alive) game->gameState = GAME_OVER;
 
         eatFood(&game->food, &game->snake1);
-        eatFood(&game->food, &game->snake2);
+        
         eatBoom(game, &game->boom, &game->snake1);
-        eatBoom(game, &game->boom, &game->snake2);
+        
         eatSpecialFood(&game->specialFood, &game->snake1);
-        eatSpecialFood(&game->specialFood, &game->snake2);
+        
 
         specialEffectCountDown(game, &game->snake1);
+        
+
+        
+    }
+    if(game->snake2.timer >= game->snake2.delay) {
+        
+        game->snake2.timer = 0;
+
+        placeObject(game);
+
+        snakeProperty(&game->snake2);
+
+        eatFood(&game->food, &game->snake2);
+        
+        eatBoom(game, &game->boom, &game->snake2);
+        
+        eatSpecialFood(&game->specialFood, &game->snake2);
+
         specialEffectCountDown(game, &game->snake2);
 
-        drawGame(screen, game);
     }
+    move(screen, &game->snake1, &game->snake2);
+    checkCollition(&game->snake1, &game->snake2, &game->multiplayer);
+    if(!game->snake1.alive || !game->snake2.alive) game->gameState = GAME_OVER;
+    drawGame(screen, game);
 
 }
 
