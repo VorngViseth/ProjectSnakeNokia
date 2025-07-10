@@ -16,6 +16,7 @@ typedef enum {
     MENU,
     SINGLE_PLAYER,
     MULTI_PLAYER,
+    CHOOS_COLOR,
     GAME_OVER
 } GameState;
 

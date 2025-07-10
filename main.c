@@ -27,12 +27,13 @@ int main() {
                 menuState(screen, &game.gameState);
             break;
             case SINGLE_PLAYER :
-                // singlePlayer(&game, &game.gameState ,screen, &game.snake1, NULL, &game.food, &game.boom, &game.specialFood,&game.multiplayer);                
                 singlePlayer(&game, screen);
             break;
             case MULTI_PLAYER :
-                // singlePlayer(&game, &game.gameState ,screen, &game.snake1, &game.snake2, &game.food, &game.boom, &game.specialFood,&game.multiplayer);                
                 multiplayer(&game, screen);
+            break;
+            case CHOOS_COLOR :
+
             break;
             case GAME_OVER :
                 gameOver(&game, screen);
