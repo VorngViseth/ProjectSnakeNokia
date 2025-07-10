@@ -59,11 +59,29 @@ void drawObject(Tigr* screen, Object* object, TPixel objColor) {
     }
 }
 
-void drawSnake(Tigr*screen, Snake* snake){
-    if(snake->alive){
-        for(int i = 0; i < snake->length; i++) {
-            TPixel color = snake->color;
-            tigrFill(screen, snake->body[i].x*CELL_SIZE, snake->body[i].y*CELL_SIZE, CELL_SIZE, CELL_SIZE, color);
+// void drawSnake(Tigr*screen, Snake* snake){
+//     if(snake->alive){
+//         for(int i = 0; i < snake->length; i++) {
+//             TPixel color = (i==0) ? tigrRGB(0,255,0) : snake->color;
+//             tigrFill(screen, snake->body[i].x*CELL_SIZE, snake->body[i].y*CELL_SIZE, CELL_SIZE, CELL_SIZE, color);
+//         }
+//     }
+// }
+
+void drawSnake(Tigr* screen, Snake* snake) {
+    if (snake->alive) {
+        for (int i = 0; i < snake->length; i++) {
+            TPixel color;
+            if (i == 0) {
+                // Make head color a brighter version of the body color
+                color.r = (snake->color.r + 100 > 255) ? 255 : snake->color.r + 100;
+                color.g = (snake->color.g + 100 > 255) ? 255 : snake->color.g + 100;
+                color.b = (snake->color.b + 100 > 255) ? 255 : snake->color.b + 100;
+                color.a = 255;
+            } else {
+                color = snake->color;
+            }
+            tigrFill(screen, snake->body[i].x * CELL_SIZE, snake->body[i].y * CELL_SIZE, CELL_SIZE, CELL_SIZE, color);
         }
     }
 }
