@@ -86,6 +86,7 @@ void eatSpecialFood(Object* specialFood, Snake* snake) {
     if(snake->body[0].x == specialFood->objPosition.x && snake->body[0].y == specialFood->objPosition.y){
         specialFood->eaten = true;
         snake->score++;
+        snake->length++;
         snake->delay = 0.03f ;
         snake->specailEffectDuration = 5.0f;
     } 
