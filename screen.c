@@ -9,8 +9,9 @@
 void colorMenu(Tigr* screen, Game* game) {
     int tw;
     if(!game->multiplayer) {
-        tw = tigrTextWidth(tfont, "Choose Color For Your Snake");
-        tigrPrint(screen, tfont, (WINDOW_WIDTH-tw)/2, WINDOW_HIGHT/2 + 30, tigrRGB(255,255,255), "Choose Color For Your Snake");
+        char title[64] = "Choose Color For Your Snake";
+        tw = tigrTextWidth(tfont, title);
+        tigrPrint(screen, tfont, (WINDOW_WIDTH-tw)/2, WINDOW_HIGHT/2 + 30, tigrRGB(255,255,255), title);
     } 
 }
 
