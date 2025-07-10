@@ -6,15 +6,6 @@
 #include "snake.h"
 #include "object.h"
 
-void colorMenu(Tigr* screen, Game* game) {
-    int tw;
-    if(!game->multiplayer) {
-        char title[64] = "Choose Color For Your Snake";
-        tw = tigrTextWidth(tfont, title);
-        tigrPrint(screen, tfont, (WINDOW_WIDTH-tw)/2, WINDOW_HIGHT/2 + 30, tigrRGB(255,255,255), title);
-    } 
-}
-
 void drawGameOver(Tigr* screen, Game* game) {
     char gameOverText[64];
     if (game->multiplayer) {
@@ -68,6 +59,15 @@ void drawObject(Tigr* screen, Object* object, TPixel objColor) {
     }
 }
 
+// void drawSnake(Tigr*screen, Snake* snake){
+//     if(snake->alive){
+//         for(int i = 0; i < snake->length; i++) {
+//             TPixel color = (i==0) ? tigrRGB(0,255,0) : snake->color;
+//             tigrFill(screen, snake->body[i].x*CELL_SIZE, snake->body[i].y*CELL_SIZE, CELL_SIZE, CELL_SIZE, color);
+//         }
+//     }
+// }
+
 void drawSnake(Tigr* screen, Snake* snake) {
     if (snake->alive) {
         for (int i = 0; i < snake->length; i++) {
@@ -89,7 +89,7 @@ void drawSnake(Tigr* screen, Snake* snake) {
 void drawScoreBoard(Tigr* screen, Snake* snake, int x, int y) {
     char scoreText[32] ;
     snprintf(scoreText, sizeof(scoreText), "Score : %d", (snake->score>=0) ? snake->score : 0);
-    tigrPrint(screen, tfont, x, y, snake->color, scoreText);
+    tigrPrint(screen, tfont, x, y, tigrRGB(255,255,255), scoreText);
 }
 
 void drawGame(Tigr* screen, Game* game) {
@@ -104,7 +104,7 @@ void drawGame(Tigr* screen, Game* game) {
     if(&game->snake2 && game->multiplayer && &game->snake2.alive) drawSnake(screen, &game->snake2);
 
     drawScoreBoard(screen, &game->snake1, 10, 10);
-    if(&game->snake2 && game->multiplayer && &game->snake2.alive) drawScoreBoard(screen, &game->snake2, 36*CELL_SIZE, 10);
+    if(&game->snake2 && game->multiplayer && &game->snake2.alive) drawScoreBoard(screen, &game->snake2, GRID_WIDTH-60, 10);
 }
 
 void initGame(Tigr* screen, Game* game){
@@ -223,22 +223,12 @@ void multiplayer(Game* game, Tigr* screen) {
     tigrClear(screen, tigrRGB(0,0,0)); // clear <-----
     game->multiplayer = true;
     // the snake can move if the timer = delay (the snake speed)
-<<<<<<< HEAD
     if(game->snake1.timer >= game->snake1.delay ) {
         game->snake1.timer = 0;
-=======
-    if(game->timer >= game->snake1.delay || game->timer >= game->snake2.delay) {
-        game->timer = 0;
-
-        tigrClear(screen, tigrRGB(0,0,0)); // clear <-----
-        
-        game->multiplayer = true;
->>>>>>> e6d3d01 (feat : choose color)
 
         placeObject(game);
 
         snakeProperty(&game->snake1);
-
 
         eatFood(&game->food, &game->snake1);
         
@@ -246,10 +236,7 @@ void multiplayer(Game* game, Tigr* screen) {
         
         eatSpecialFood(&game->specialFood, &game->snake1);
         
-
         specialEffectCountDown(game, &game->snake1);
-        
-
         
     }
     if(game->snake2.timer >= game->snake2.delay) {
@@ -273,11 +260,6 @@ void multiplayer(Game* game, Tigr* screen) {
     checkCollition(&game->snake1, &game->snake2, &game->multiplayer);
     if(!game->snake1.alive || !game->snake2.alive) game->gameState = GAME_OVER;
     drawGame(screen, game);
-
-}
-
-void chooseColor(Game* game, Tigr* screen) {
-    tigrClear(screen, tigrRGB(0,0,0));
 
 }
 
