@@ -187,7 +187,7 @@ void singlePlayer(Game* game, Tigr* screen) {
         placeObject(game);
 
         move(screen, &game->snake1, NULL);
-        snakeProperty(&game->snake1);
+
         checkCollition(&game->snake1, NULL, &game->multiplayer);
 
         if(!game->snake1.alive) game->gameState = GAME_OVER;
@@ -195,6 +195,8 @@ void singlePlayer(Game* game, Tigr* screen) {
         eatFood(&game->food, &game->snake1);
         eatBoom(game, &game->boom, &game->snake1);
         eatSpecialFood(&game->specialFood, &game->snake1);
+
+        snakeProperty(&game->snake1);
 
         specialEffectCountDown(game, &game->snake1);
 
@@ -228,13 +230,13 @@ void multiplayer(Game* game, Tigr* screen) {
 
         placeObject(game);
 
-        snakeProperty(&game->snake1);
-
         eatFood(&game->food, &game->snake1);
         
         eatBoom(game, &game->boom, &game->snake1);
         
         eatSpecialFood(&game->specialFood, &game->snake1);
+
+        snakeProperty(&game->snake1);
         
         specialEffectCountDown(game, &game->snake1);
         
@@ -245,13 +247,13 @@ void multiplayer(Game* game, Tigr* screen) {
 
         placeObject(game);
 
-        snakeProperty(&game->snake2);
-
         eatFood(&game->food, &game->snake2);
         
         eatBoom(game, &game->boom, &game->snake2);
         
         eatSpecialFood(&game->specialFood, &game->snake2);
+
+        snakeProperty(&game->snake2);
 
         specialEffectCountDown(game, &game->snake2);
 
