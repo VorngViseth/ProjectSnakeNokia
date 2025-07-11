@@ -23,7 +23,6 @@ int main() {
 
         switch (game.gameState){
             case MENU :
-                game.print = false;
                 menuState(screen, &game.gameState);
             break;
             case SINGLE_PLAYER :
@@ -44,5 +43,6 @@ int main() {
     }
 
     shutdown_audio(&game.audio);
+    free(screen);
     return 0;
 }

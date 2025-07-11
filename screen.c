@@ -117,7 +117,6 @@ void initGame(Tigr* screen, Game* game){
     game->snake1.timer = 0;
     game->snake2.timer = 0;
     game->multiplayer = false; 
-    game->print = false;
 
     game->food.eaten = true;
     game->boom.eaten = true;
