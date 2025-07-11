@@ -80,7 +80,7 @@ void drawSnake(Tigr* screen, Snake* snake) {
 void drawScoreBoard(Tigr* screen, Snake* snake, int x, int y) {
     char scoreText[32] ;
     snprintf(scoreText, sizeof(scoreText), "Score : %d", (snake->score>=0) ? snake->score : 0);
-    tigrPrint(screen, tfont, x, y, tigrRGB(255,255,255), scoreText);
+    tigrPrint(screen, tfont, x, y, snake->color, scoreText);
 }
 
 void drawGame(Tigr* screen, Game* game) {
@@ -95,7 +95,7 @@ void drawGame(Tigr* screen, Game* game) {
     if(&game->snake2 && game->multiplayer && &game->snake2.alive) drawSnake(screen, &game->snake2);
 
     drawScoreBoard(screen, &game->snake1, 10, 10);
-    if(&game->snake2 && game->multiplayer && &game->snake2.alive) drawScoreBoard(screen, &game->snake2, GRID_WIDTH-60, 10);
+    if(&game->snake2 && game->multiplayer && &game->snake2.alive) drawScoreBoard(screen, &game->snake2, 37*CELL_SIZE, 10);
 }
 
 void initGame(Tigr* screen, Game* game ){
