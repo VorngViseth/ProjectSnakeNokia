@@ -107,7 +107,7 @@ void drawGame(Tigr* screen, Game* game) {
     if(&game->snake2 && game->multiplayer && &game->snake2.alive) drawScoreBoard(screen, &game->snake2, GRID_WIDTH-60, 10);
 }
 
-void initGame(Tigr* screen, Game* game){
+void initGame(Tigr* screen, Game* game ){
     game->gameState = MENU;
 
     game->dir1 = 0;
@@ -132,8 +132,8 @@ void initGame(Tigr* screen, Game* game){
     int centerX = GRID_WIDTH / 2;
     int centerY = GRID_HIGHT / 2;
 
-    snakeInit(&game->snake1, tigrRGB(0,200,0), centerX - 5, centerY, &game->dir1);
-    snakeInit(&game->snake2, tigrRGB(0,0,200), centerX + 5, centerY, &game->dir2);
+    snakeInit(&game->snake1, game->color1, centerX - 5, centerY, &game->dir1);
+    snakeInit(&game->snake2, game->color2, centerX + 5, centerY, &game->dir2);
 
     game->originalDelay = game->snake1.delay;
 }
@@ -152,6 +152,7 @@ void menuState(Tigr* screen, GameState* gameState) {
 
     if(tigrKeyDown(screen, '1')) *gameState = SINGLE_PLAYER;
     else if(tigrKeyDown(screen, '2')) *gameState = MULTI_PLAYER;
+    else if(tigrKeyDown(screen, '3')) *gameState = CHOOS_COLOR;
     else if(tigrKeyDown(screen, TK_ESCAPE)) {
         tigrFree(screen);
         exit(0);
@@ -188,8 +189,6 @@ void singlePlayer(Game* game, Tigr* screen) {
 
         move(screen, &game->snake1, NULL);
 
-        checkCollition(&game->snake1, NULL, &game->multiplayer);
-
         if(!game->snake1.alive) game->gameState = GAME_OVER;
 
         eatFood(&game->food, &game->snake1);
@@ -199,6 +198,8 @@ void singlePlayer(Game* game, Tigr* screen) {
         snakeProperty(&game->snake1);
 
         specialEffectCountDown(game, &game->snake1);
+
+        checkCollition(&game->snake1, NULL, &game->multiplayer);
 
         drawGame(screen, game);
     }
@@ -263,6 +264,37 @@ void multiplayer(Game* game, Tigr* screen) {
     if(!game->snake1.alive || !game->snake2.alive) game->gameState = GAME_OVER;
     drawGame(screen, game);
 
+}
+void chooseColor(Game* game , Tigr* screen){
+    tigrClear(screen, tigrRGB(0,0,0));
+
+        
+        tigrPrint(screen, tfont, 100, 130, tigrRGB(255, 0, 0),     "1 - Red");
+        tigrPrint(screen, tfont, 100, 160, tigrRGB(0, 255, 0),     "2 - Green");
+        tigrPrint(screen, tfont, 100, 190, tigrRGB(0, 0, 255),     "3 - Blue");
+        tigrPrint(screen, tfont, 100, 220, tigrRGB(255, 255, 0),   "4 - Yellow");
+        tigrPrint(screen, tfont, 100, 250, tigrRGB(128, 0, 128),   "5 - Purple");
+        tigrPrint(screen, tfont, 100, 280, tigrRGB(255, 165, 0),   "6 - Orange");
+        tigrPrint(screen, tfont, 100, 310, tigrRGB(255, 255, 255), "7 - White");
+        tigrPrint(screen, tfont, 100, 340, tigrRGB(128, 128, 128), "8 - Gray");
+        tigrPrint(screen, tfont, 100, 370, tigrRGB(0, 255, 255),   "9 - Cyan");
+        tigrPrint(screen, tfont, 100, 400, tigrRGB(255, 105, 180), "0 - Pink");
+        tigrUpdate(screen);
+
+        if (tigrKeyHeld(screen, '1')) game->color1 = tigrRGB(255, 0, 0);        // Red
+        else if (tigrKeyHeld(screen, '2')) game->color1 = tigrRGB(0, 255, 0);   // Green
+        else if (tigrKeyHeld(screen, '3')) game->color1 = tigrRGB(0, 0, 255);   // Blue
+        else if (tigrKeyHeld(screen, '4')) game->color1 = tigrRGB(255, 255, 0); // Yellow
+        else if (tigrKeyHeld(screen, '5')) game->color1 = tigrRGB(128, 0, 128); // Purple
+        else if (tigrKeyHeld(screen, '6')) game->color1 = tigrRGB(255, 165, 0); // Orange
+        else if (tigrKeyHeld(screen, '7')) game->color1 = tigrRGB(255, 255, 255); // White
+        else if (tigrKeyHeld(screen, '8')) game->color1 = tigrRGB(128, 128, 128);       // Gray
+        else if (tigrKeyHeld(screen, '9')) game->color1 = tigrRGB(0, 255, 255);   // Cyan
+        else if (tigrKeyHeld(screen, '0')) game->color1 = tigrRGB(255, 105, 180); // Pink
+        else if (tigrKeyHeld(screen, TK_ESCAPE)) {
+            initGame(screen, game);
+            game->gameState = MENU;
+        }
 }
 
 void gameOver(Game*game, Tigr* screen){

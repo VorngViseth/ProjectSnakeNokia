@@ -15,6 +15,7 @@ int main() {
     Tigr* screen = tigrWindow(WINDOW_WIDTH, WINDOW_HIGHT, "PROJECT SNAKE NOKIA", TIGR_FIXED);
     Game game;
 
+    
     initGame(screen, &game);
     
     while(!tigrClosed(screen)){
@@ -33,7 +34,7 @@ int main() {
                 multiplayer(&game, screen);
             break;
             case CHOOS_COLOR :
-
+                chooseColor(&game, screen);
             break;
             case GAME_OVER :
                 gameOver(&game, screen);

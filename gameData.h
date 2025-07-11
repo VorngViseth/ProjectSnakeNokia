@@ -6,7 +6,7 @@
 #include "audio.h"
 #include <stdbool.h>
 
-#define CELL_SIZE 20
+#define CELL_SIZE 25
 #define GRID_HIGHT 40
 #define GRID_WIDTH 40
 #define WINDOW_HIGHT (CELL_SIZE*GRID_WIDTH)
@@ -37,7 +37,6 @@ typedef struct {
     bool moved;
     float delay;
     float specailEffectDuration;
-
     float timer;
 } Snake;
 
@@ -62,6 +61,7 @@ typedef struct {
     float boomSpawnTimer;
     float specialFoodspawnTimer;
     float originalDelay;
+    TPixel color1, color2;
 } Game;
 
 #endif
