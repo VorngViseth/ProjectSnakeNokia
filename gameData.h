@@ -57,7 +57,6 @@ typedef struct {
     
     float deltaTime;
     bool multiplayer;
-    bool print;
     float boomSpawnTimer;
     float specialFoodspawnTimer;
     float originalDelay;

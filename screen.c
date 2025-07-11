@@ -59,15 +59,6 @@ void drawObject(Tigr* screen, Object* object, TPixel objColor) {
     }
 }
 
-// void drawSnake(Tigr*screen, Snake* snake){
-//     if(snake->alive){
-//         for(int i = 0; i < snake->length; i++) {
-//             TPixel color = (i==0) ? tigrRGB(0,255,0) : snake->color;
-//             tigrFill(screen, snake->body[i].x*CELL_SIZE, snake->body[i].y*CELL_SIZE, CELL_SIZE, CELL_SIZE, color);
-//         }
-//     }
-// }
-
 void drawSnake(Tigr* screen, Snake* snake) {
     if (snake->alive) {
         for (int i = 0; i < snake->length; i++) {
@@ -113,11 +104,9 @@ void initGame(Tigr* screen, Game* game ){
     game->dir1 = 0;
     game->dir2 = 0;
 
-    game->bmg_play = false;
     game->snake1.timer = 0;
     game->snake2.timer = 0;
     game->multiplayer = false; 
-    game->print = false;
 
     game->food.eaten = true;
     game->boom.eaten = true;
@@ -126,8 +115,6 @@ void initGame(Tigr* screen, Game* game ){
     srand(time(NULL));  
     game->boomSpawnTimer = rand()%20 + 10; // 10 - 29 secs
     game->specialFoodspawnTimer = rand()%20 + 10; // 10-29 secs
-
-    init_audio(&game->audio);
 
     int centerX = GRID_WIDTH / 2;
     int centerY = GRID_HIGHT / 2;
