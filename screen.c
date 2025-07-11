@@ -279,8 +279,6 @@ void chooseColor(Game* game , Tigr* screen){
         tigrPrint(screen, tfont, 400, 370, tigrRGB(250, 128, 114), "O - Salmon");
         tigrPrint(screen, tfont, 400, 400, tigrRGB(75, 0, 130),    "P - Indigo");
 
-        tigrUpdate(screen);
-
         if (tigrKeyHeld(screen, '1')) game->color1 = tigrRGB(255, 0, 0);          // Red
         else if (tigrKeyHeld(screen, '2')) game->color1 = tigrRGB(0, 255, 0);     // Green
         else if (tigrKeyHeld(screen, '3')) game->color1 = tigrRGB(0, 0, 255);     // Blue
