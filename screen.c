@@ -104,7 +104,6 @@ void initGame(Tigr* screen, Game* game){
     game->dir1 = 0;
     game->dir2 = 0;
 
-    game->bmg_play = false;
     game->snake1.timer = 0;
     game->snake2.timer = 0;
     game->multiplayer = false; 
@@ -116,8 +115,6 @@ void initGame(Tigr* screen, Game* game){
     srand(time(NULL));  
     game->boomSpawnTimer = rand()%20 + 10; // 10 - 29 secs
     game->specialFoodspawnTimer = rand()%20 + 10; // 10-29 secs
-
-    init_audio(&game->audio);
 
     int centerX = GRID_WIDTH / 2;
     int centerY = GRID_HIGHT / 2;
