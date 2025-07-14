@@ -354,3 +354,4 @@ char *tigrEncodeUTF8(char *text, int cp);
 #ifdef __cplusplus
 }
 #endif
+void drawScaledText(Tigr *screen, TigrFont *font, int x, int y, TPixel color, float scale, const char *text);

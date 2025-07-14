@@ -256,29 +256,34 @@ void multiplayer(Game* game, Tigr* screen) {
 void chooseColor(Game* game , Tigr* screen){
     tigrClear(screen, tigrRGB(0,0,0));
 
-    tigrPrint(screen, tfont, 100, 100, game->color1,           "Player1");
-    tigrPrint(screen, tfont, 100, 130, tigrRGB(255, 0, 0),     "1 - Red");
-    tigrPrint(screen, tfont, 100, 160, tigrRGB(0, 255, 0),     "2 - Green");
-    tigrPrint(screen, tfont, 100, 190, tigrRGB(0, 0, 255),     "3 - Blue");
-    tigrPrint(screen, tfont, 100, 220, tigrRGB(255, 255, 0),   "4 - Yellow");
-    tigrPrint(screen, tfont, 100, 250, tigrRGB(128, 0, 128),   "5 - Purple");
-    tigrPrint(screen, tfont, 100, 280, tigrRGB(255, 165, 0),   "6 - Orange");
-    tigrPrint(screen, tfont, 100, 310, tigrRGB(255, 255, 255), "7 - White");
-    tigrPrint(screen, tfont, 100, 340, tigrRGB(128, 128, 128), "8 - Gray");
-    tigrPrint(screen, tfont, 100, 370, tigrRGB(0, 255, 255),   "9 - Cyan");
-    tigrPrint(screen, tfont, 100, 400, tigrRGB(255, 105, 180), "0 - Pink");
+    float scale = 5.0f; // Adjust this value to make text bigger or smaller
 
-    tigrPrint(screen, tfont, 400, 100, game->color2,           "Player2");
-    tigrPrint(screen, tfont, 400, 130, tigrRGB(0, 128, 128),   "Q - Teal");
-    tigrPrint(screen, tfont, 400, 160, tigrRGB(173, 255, 47),  "W - Lime");
-    tigrPrint(screen, tfont, 400, 190, tigrRGB(0, 0, 128),     "E - Maroon");
-    tigrPrint(screen, tfont, 400, 220, tigrRGB(0, 0, 128),     "R - Navy Blue");
-    tigrPrint(screen, tfont, 400, 250, tigrRGB(255, 215, 0),   "T - Gold");
-    tigrPrint(screen, tfont, 400, 280, tigrRGB(135, 206, 235), "Y - Sky Blue");
-    tigrPrint(screen, tfont, 400, 310, tigrRGB(128, 128, 0),   "U - Olive");
-    tigrPrint(screen, tfont, 400, 340, tigrRGB(255, 127, 80),  "I - Coral");
-    tigrPrint(screen, tfont, 400, 370, tigrRGB(250, 128, 114), "O - Salmon");
-    tigrPrint(screen, tfont, 400, 400, tigrRGB(75, 0, 130),    "P - Indigo");
+    drawScaledText(screen, tfont, 150, 80, game->color1,           scale, "Player1");
+    drawScaledText(screen, tfont, 100, 180, tigrRGB(255, 0, 0),     scale, "1 - Red");
+    drawScaledText(screen, tfont, 100, 240, tigrRGB(0, 255, 0),     scale, "2 - Green");
+    drawScaledText(screen, tfont, 100, 300, tigrRGB(0, 0, 255),     scale, "3 - Blue");
+    drawScaledText(screen, tfont, 100, 360, tigrRGB(255, 255, 0),   scale, "4 - Yellow");
+    drawScaledText(screen, tfont, 100, 420, tigrRGB(128, 0, 128),   scale, "5 - Purple");
+    drawScaledText(screen, tfont, 100, 480, tigrRGB(255, 165, 0),   scale, "6 - Orange");
+    drawScaledText(screen, tfont, 100, 540, tigrRGB(255, 255, 255), scale, "7 - White");
+    drawScaledText(screen, tfont, 100, 600, tigrRGB(128, 128, 128), scale, "8 - Gray");
+    drawScaledText(screen, tfont, 100, 660, tigrRGB(0, 255, 255),   scale, "9 - Cyan");
+    drawScaledText(screen, tfont, 100, 720, tigrRGB(255, 105, 180), scale, "0 - Pink");
+
+    drawScaledText(screen, tfont, 600, 80, game->color2,           scale, "Player2");
+    drawScaledText(screen, tfont, 550, 180, tigrRGB(0, 128, 128),   scale, "Q - Teal");
+    drawScaledText(screen, tfont, 550, 240, tigrRGB(173, 255, 47),  scale, "W - Lime");
+    drawScaledText(screen, tfont, 550, 300, tigrRGB(128, 0, 0),     scale, "E - Maroon");
+    drawScaledText(screen, tfont, 550, 360, tigrRGB(0, 0, 128),     scale, "R - Navy Blue");
+    drawScaledText(screen, tfont, 550, 420, tigrRGB(255, 215, 0),   scale, "T - Gold");
+    drawScaledText(screen, tfont, 550, 480, tigrRGB(135, 206, 235), scale, "Y - Sky Blue");
+    drawScaledText(screen, tfont, 550, 540, tigrRGB(128, 128, 0),   scale, "U - Olive");
+    drawScaledText(screen, tfont, 550, 600, tigrRGB(255, 127, 80),  scale, "I - Coral");
+    drawScaledText(screen, tfont, 550, 660, tigrRGB(250, 128, 114), scale, "O - Salmon");
+    drawScaledText(screen, tfont, 550, 720, tigrRGB(75, 0, 130),    scale, "P - Indigo");
+
+    drawScaledText(screen, tfont, 300, 850, tigrRGB(255, 255, 255),    scale, "ESC - to exit");
+
 
     if (tigrKeyHeld(screen, '1')) game->color1 = tigrRGB(255, 0, 0);          // Red
     else if (tigrKeyHeld(screen, '2')) game->color1 = tigrRGB(0, 255, 0);     // Green
@@ -292,8 +297,8 @@ void chooseColor(Game* game , Tigr* screen){
     else if (tigrKeyHeld(screen, '0')) game->color1 = tigrRGB(255, 105, 180); // Pink
     else if (tigrKeyHeld(screen, 'Q') || tigrKeyHeld(screen, 'q')) game->color2 = tigrRGB(0, 128, 128);       // Teal
     else if (tigrKeyHeld(screen, 'W') || tigrKeyHeld(screen, 'w')) game->color2 = tigrRGB(173, 255, 47);      // Lime
-    else if (tigrKeyHeld(screen, 'E') || tigrKeyHeld(screen, 'e')) game->color2 = tigrRGB(0, 0, 128);         // Navy Blue
-    else if (tigrKeyHeld(screen, 'R') || tigrKeyHeld(screen, 'r')) game->color2 = tigrRGB(128, 0, 0);         // Maroon
+    else if (tigrKeyHeld(screen, 'E') || tigrKeyHeld(screen, 'e')) game->color2 = tigrRGB(128, 0, 0);         // Navy Blue
+    else if (tigrKeyHeld(screen, 'R') || tigrKeyHeld(screen, 'r')) game->color2 = tigrRGB(0, 0, 128);         // Maroon
     else if (tigrKeyHeld(screen, 'T') || tigrKeyHeld(screen, 't')) game->color2 = tigrRGB(255, 215, 0);       // Gold
     else if (tigrKeyHeld(screen, 'Y') || tigrKeyHeld(screen, 'y')) game->color2 = tigrRGB(135, 206, 235);     // Sky Blue
     else if (tigrKeyHeld(screen, 'U') || tigrKeyHeld(screen, 'u')) game->color2 = tigrRGB(128, 128, 0);       // Olive

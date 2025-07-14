@@ -6432,4 +6432,27 @@ void tigrSetPostFX(Tigr* bmp, float p1, float p2, float p3, float p4) {
 
 
 //////// End of inlined file: tigr_amalgamated.c ////////
+void drawScaledText(Tigr *screen, TigrFont *font, int x, int y, TPixel color, float scale, const char *text) {
+    int origW = tigrTextWidth(font, text);
+    int origH = tigrTextHeight(font, text);
+    Tigr *temp = tigrBitmap(origW, origH);
+
+    tigrClear(temp, tigrRGBA(0, 0, 0, 0));
+    tigrPrint(temp, font, 0, 0, color, text);
+
+    // Nearest-neighbor scaling (manual)
+    int newW = origW * scale;
+    int newH = origH * scale;
+
+    for (int ty = 0; ty < newH; ty++) {
+        for (int tx = 0; tx < newW; tx++) {
+            int srcX = tx / scale;
+            int srcY = ty / scale;
+            TPixel pix = temp->pix[srcY * origW + srcX];
+            tigrPlot(screen, x + tx, y + ty, pix);
+        }
+    }
+
+    tigrFree(temp);
+}
 
