@@ -291,7 +291,7 @@ void chooseColor(Game* game , Tigr* screen){
     else if (tigrKeyHeld(screen, '9')) game->color1 = tigrRGB(0, 255, 255);   // Cyan
     else if (tigrKeyHeld(screen, '0')) game->color1 = tigrRGB(255, 105, 180); // Pink
     else if (tigrKeyHeld(screen, 'Q') || tigrKeyHeld(screen, 'q')) game->color2 = tigrRGB(0, 128, 128);       // Teal
-    else if (tigrKeyHeld(screen, 'W') || tigrKeyHeld(screen, 'w')) game->color1 = tigrRGB(173, 255, 47);      // Lime
+    else if (tigrKeyHeld(screen, 'W') || tigrKeyHeld(screen, 'w')) game->color2 = tigrRGB(173, 255, 47);      // Lime
     else if (tigrKeyHeld(screen, 'E') || tigrKeyHeld(screen, 'e')) game->color2 = tigrRGB(0, 0, 128);         // Navy Blue
     else if (tigrKeyHeld(screen, 'R') || tigrKeyHeld(screen, 'r')) game->color2 = tigrRGB(128, 0, 0);         // Maroon
     else if (tigrKeyHeld(screen, 'T') || tigrKeyHeld(screen, 't')) game->color2 = tigrRGB(255, 215, 0);       // Gold
