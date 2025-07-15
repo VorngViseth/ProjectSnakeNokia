@@ -278,7 +278,7 @@ void chooseColor(Game* game , Tigr* screen){
 
     float scale = 5.0f; // Adjust this value to make text bigger or smaller
 
-    drawScaledText(screen, tfont, 150, 80, game->color1,           scale, "Player1");
+    drawScaledText(screen, tfont, 150, 80, game->color1,            scale, "Player1");
     drawScaledText(screen, tfont, 100, 180, tigrRGB(255, 0, 0),     scale, "1 - Red");
     drawScaledText(screen, tfont, 100, 240, tigrRGB(0, 255, 0),     scale, "2 - Green");
     drawScaledText(screen, tfont, 100, 300, tigrRGB(0, 0, 255),     scale, "3 - Blue");
@@ -290,7 +290,7 @@ void chooseColor(Game* game , Tigr* screen){
     drawScaledText(screen, tfont, 100, 660, tigrRGB(0, 255, 255),   scale, "9 - Cyan");
     drawScaledText(screen, tfont, 100, 720, tigrRGB(255, 105, 180), scale, "0 - Pink");
 
-    drawScaledText(screen, tfont, 600, 80, game->color2,           scale, "Player2");
+    drawScaledText(screen, tfont, 600, 80, game->color2,            scale, "Player2");
     drawScaledText(screen, tfont, 550, 180, tigrRGB(0, 128, 128),   scale, "Q - Teal");
     drawScaledText(screen, tfont, 550, 240, tigrRGB(173, 255, 47),  scale, "W - Lime");
     drawScaledText(screen, tfont, 550, 300, tigrRGB(128, 0, 0),     scale, "E - Maroon");
