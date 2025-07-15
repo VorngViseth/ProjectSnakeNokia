@@ -91,11 +91,11 @@ void drawGame(Tigr* screen, Game* game) {
     if(&game->boom != NULL) drawObject(screen, &game->boom, tigrRGB(50,50,50));
     if(&game->specialFood != NULL) drawObject(screen, &game->specialFood, tigrRGB(100,100,250));
 
-    if(&game->snake1.alive) drawSnake(screen, &game->snake1);
-    if(&game->snake2 && game->multiplayer && &game->snake2.alive) drawSnake(screen, &game->snake2);
+    if(game->snake1.alive) drawSnake(screen, &game->snake1);
+    if(&game->snake2 && game->multiplayer && game->snake2.alive) drawSnake(screen, &game->snake2);
 
     drawScoreBoard(screen, &game->snake1, 10, 10);
-    if(&game->snake2 && game->multiplayer && &game->snake2.alive) drawScoreBoard(screen, &game->snake2, 37*CELL_SIZE, 10);
+    if(&game->snake2 && game->multiplayer && game->snake2.alive) drawScoreBoard(screen, &game->snake2, 37*CELL_SIZE, 10);
 }
 
 void initGame(Tigr* screen, Game* game ){
@@ -118,6 +118,14 @@ void initGame(Tigr* screen, Game* game ){
 
     int centerX = GRID_WIDTH / 2;
     int centerY = GRID_HIGHT / 2;
+
+    game->bmg_boom_play = false;
+    game->bmg_food_play = false;
+    game->bmg_specialFood_play = false;
+
+    init_audio(&game->foodAudio);
+    init_audio(&game->boomAudio);
+    init_audio(&game->specialFoodAudio);
 
     snakeInit(&game->snake1, game->color1, centerX - 5, centerY, &game->dir1);
     snakeInit(&game->snake2, game->color2, centerX + 5, centerY, &game->dir2);
@@ -178,9 +186,9 @@ void singlePlayer(Game* game, Tigr* screen) {
 
         if(!game->snake1.alive) game->gameState = GAME_OVER;
 
-        eatFood(&game->food, &game->snake1);
+        eatFood(&game->food, &game->snake1, game);
         eatBoom(game, &game->boom, &game->snake1);
-        eatSpecialFood(&game->specialFood, &game->snake1);
+        eatSpecialFood(&game->specialFood, &game->snake1, game);
 
         snakeProperty(&game->snake1);
 
@@ -218,11 +226,11 @@ void multiplayer(Game* game, Tigr* screen) {
 
         placeObject(game);
 
-        eatFood(&game->food, &game->snake1);
+        eatFood(&game->food, &game->snake1, game);
         
         eatBoom(game, &game->boom, &game->snake1);
         
-        eatSpecialFood(&game->specialFood, &game->snake1);
+        eatSpecialFood(&game->specialFood, &game->snake1, game);
 
         snakeProperty(&game->snake1);
         
@@ -235,11 +243,11 @@ void multiplayer(Game* game, Tigr* screen) {
 
         placeObject(game);
 
-        eatFood(&game->food, &game->snake2);
+        eatFood(&game->food, &game->snake2, game);
         
         eatBoom(game, &game->boom, &game->snake2);
         
-        eatSpecialFood(&game->specialFood, &game->snake2);
+        eatSpecialFood(&game->specialFood, &game->snake2, game);
 
         snakeProperty(&game->snake2);
 
@@ -318,6 +326,9 @@ void gameOver(Game*game, Tigr* screen){
     drawGameOver(screen, game);
     
     if(tigrKeyDown(screen, TK_SPACE)){
+        shutdown_audio(&game->foodAudio);
+        shutdown_audio(&game->boomAudio);
+        shutdown_audio(&game->specialFoodAudio);
         game->gameState = MENU;
         initGame(screen, game);
     }

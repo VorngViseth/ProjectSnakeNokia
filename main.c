@@ -51,6 +51,9 @@ int main() {
     }
 
     shutdown_audio(&game.audio);
+    shutdown_audio(&game.foodAudio);
+    shutdown_audio(&game.boomAudio);
+    shutdown_audio(&game.specialFoodAudio);
     free(screen);
     return 0;
 }

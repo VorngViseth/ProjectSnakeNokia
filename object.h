@@ -6,11 +6,11 @@
 
 void placeObject(Game* game);
 
-void eatFood(Object* food, Snake* snake);
+void eatFood(Object* food, Snake* snake, Game* game);
 
 void eatBoom(Game* game, Object* boom, Snake* snake);
 
-void eatSpecialFood(Object* specialFood, Snake* snake);
+void eatSpecialFood(Object* specialFood, Snake* snake, Game* game);
 
 void specialEffectCountDown(Game* game, Snake* snake);
 
