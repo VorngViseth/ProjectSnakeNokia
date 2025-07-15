@@ -10,29 +10,28 @@ void drawGameOver(Tigr* screen, Game* game) {
     char gameOverText[64];
     if (game->multiplayer) {
         if (!game->snake1.alive && !game->snake2.alive) {
-            snprintf(gameOverText, sizeof(gameOverText), "DRAW! Scores: %d-%d", game->snake1.score, game->snake2.score);
+            snprintf(gameOverText, sizeof(gameOverText), " DRAW!\nScores:\n  %d-%d", game->snake1.score, game->snake2.score);
         } else if (!game->snake1.alive) {
-            snprintf(gameOverText, sizeof(gameOverText), "PLAYER 2 WINS! %d-%d", game->snake1.score, game->snake2.score);
+            snprintf(gameOverText, sizeof(gameOverText), "PLAYER2\n WINS!\n  %d-%d", game->snake1.score, game->snake2.score);
         } else {
-            snprintf(gameOverText, sizeof(gameOverText), "PLAYER 1 WINS! %d-%d", game->snake1.score, game->snake2.score);
+            snprintf(gameOverText, sizeof(gameOverText), "PLAYER1\n WINS!\n  %d-%d", game->snake1.score, game->snake2.score);
         }
     } else {
-        snprintf(gameOverText, sizeof(gameOverText), "GAME OVER! Score: %d", game->snake1.score);
+        snprintf(gameOverText, sizeof(gameOverText), "GAME OVER!\n Score: %d", game->snake1.score);
     }
+
+    float scale = 10.0f;
     
     int tw = tigrTextWidth(tfont, gameOverText);
-    tigrPrint(screen, tfont, (WINDOW_WIDTH-tw)/2, WINDOW_HIGHT/2 - 30, 
-             tigrRGB(255, 50, 50), gameOverText);
-    
+    drawScaledText(screen, tfont, (WINDOW_WIDTH-(tw*(scale)))/2, 230, tigrRGB(100, 100, 100), scale, gameOverText);
+
     const char* restartText = "Press SPACE to return to menu";
     tw = tigrTextWidth(tfont, restartText);
-    tigrPrint(screen, tfont, (WINDOW_WIDTH-tw)/2, WINDOW_HIGHT/2 + 10,
-             tigrRGB(250, 50, 50), restartText);
+    drawScaledText(screen, tfont, (WINDOW_WIDTH-(tw*(scale-7.5)))/2, 720, tigrRGB(100, 100, 100), scale-7.5, restartText);
 
-    const char* exitText = "Press esc to exit the game";
+    const char* exitText = "Press ESC to exit the game";
     tw = tigrTextWidth(tfont, exitText);
-    tigrPrint(screen, tfont, (WINDOW_WIDTH-tw)/2, WINDOW_HIGHT/2 + 60,
-                tigrRGB(250,50,50), exitText);
+    drawScaledText(screen, tfont, (WINDOW_WIDTH-(tw*(scale-8)))/2, 790, tigrRGB(100, 100, 100), scale-8, exitText);
 }
 
 void drawBorder(Tigr* screen){
@@ -131,6 +130,10 @@ void initGame(Tigr* screen, Game* game ){
 
     snakeInit(&game->snake1, game->color1, centerX - 5, centerY, &game->dir1);
     snakeInit(&game->snake2, game->color2, centerX + 5, centerY, &game->dir2);
+
+    //default snake color
+    game->color1 = tigrRGB(255, 0, 0);
+    game->color2 = tigrRGB(0, 128, 128);
 
     game->originalDelay = game->snake1.delay;
 }
@@ -264,7 +267,14 @@ void multiplayer(Game* game, Tigr* screen) {
 }
 
 void chooseColor(Game* game , Tigr* screen){
-    tigrClear(screen, tigrRGB(0,0,0));
+    tigrClear(screen, tigrRGB(0, 0, 0));
+
+    Tigr* menuPicture = tigrLoadImage("asset/background.png");
+    
+    int x = (screen->w - menuPicture->w) / 2;
+    int y = (screen->h - menuPicture->h) / 2;
+
+    tigrBlit(screen, menuPicture, x, y, 0, 0, menuPicture->w, menuPicture->h);
 
     float scale = 5.0f; // Adjust this value to make text bigger or smaller
 
@@ -317,13 +327,13 @@ void chooseColor(Game* game , Tigr* screen){
     else if (tigrKeyHeld(screen, 'P') || tigrKeyHeld(screen, 'p')) game->color2 = tigrRGB(75, 0, 130);        // Indigo
 
     else if (tigrKeyHeld(screen, TK_ESCAPE)) {
-        initGame(screen, game);
+        
         game->gameState = MENU;
     }
 }
 
 void gameOver(Game* game, Tigr* screen){
-    tigrClear(screen, tigrRGB(0,0,0));
+    tigrClear(screen, tigrRGB(0, 0, 0));
 
     drawGameOver(screen, game);
 
