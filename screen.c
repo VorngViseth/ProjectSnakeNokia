@@ -128,12 +128,12 @@ void initGame(Tigr* screen, Game* game ){
     init_audio(&game->specialFoodAudio);
     init_audio(&game->gameOverAudio);
 
-    snakeInit(&game->snake1, game->color1, centerX - 5, centerY, &game->dir1);
-    snakeInit(&game->snake2, game->color2, centerX + 5, centerY, &game->dir2);
-
     //default snake color
     game->color1 = tigrRGB(255, 0, 0);
     game->color2 = tigrRGB(0, 128, 128);
+
+    snakeInit(&game->snake1, game->color1, centerX - 5, centerY, &game->dir1);
+    snakeInit(&game->snake2, game->color2, centerX + 5, centerY, &game->dir2);
 
     game->originalDelay = game->snake1.delay;
 }
