@@ -52,8 +52,8 @@ typedef struct {
     Object food, boom, specialFood;
     GameState gameState;
     int dir1, dir2;
-    AudioSystem audio, foodAudio, boomAudio, specialFoodAudio;
-    bool bmg_play, bmg_food_play, bmg_boom_play, bmg_specialFood_play;
+    AudioSystem audio, foodAudio, boomAudio, specialFoodAudio, gameOverAudio;
+    bool bmg_play, bmg_food_play, bmg_boom_play, bmg_specialFood_play, bmg_gameOver_play;
     
     float deltaTime;
     bool multiplayer;

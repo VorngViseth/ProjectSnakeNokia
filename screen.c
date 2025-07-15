@@ -122,10 +122,12 @@ void initGame(Tigr* screen, Game* game ){
     game->bmg_boom_play = false;
     game->bmg_food_play = false;
     game->bmg_specialFood_play = false;
+    game->bmg_gameOver_play = false;
 
     init_audio(&game->foodAudio);
     init_audio(&game->boomAudio);
     init_audio(&game->specialFoodAudio);
+    init_audio(&game->gameOverAudio);
 
     snakeInit(&game->snake1, game->color1, centerX - 5, centerY, &game->dir1);
     snakeInit(&game->snake2, game->color2, centerX + 5, centerY, &game->dir2);
@@ -320,12 +322,22 @@ void chooseColor(Game* game , Tigr* screen){
     }
 }
 
-void gameOver(Game*game, Tigr* screen){
+void gameOver(Game* game, Tigr* screen){
     tigrClear(screen, tigrRGB(0,0,0));
 
     drawGameOver(screen, game);
-    
+
+    if(!game->bmg_gameOver_play) {
+        stop_bgm(&game->audio);
+        shutdown_audio(&game->gameOverAudio);
+        init_audio(&game->gameOverAudio);
+        play_bgm(&game->gameOverAudio, "asset/snakeGameOver.mp3");
+        game->bmg_gameOver_play = true;
+    }
+
     if(tigrKeyDown(screen, TK_SPACE)){
+        game->bmg_play = false;
+        shutdown_audio(&game->gameOverAudio);
         shutdown_audio(&game->foodAudio);
         shutdown_audio(&game->boomAudio);
         shutdown_audio(&game->specialFoodAudio);
@@ -333,7 +345,16 @@ void gameOver(Game*game, Tigr* screen){
         initGame(screen, game);
     }
     else if(tigrKeyDown(screen, TK_ESCAPE)) {
-        tigrFree(screen);
+        cleanUpGame(game, screen);
         exit(0);
     } 
+}
+
+void cleanUpGame(Game* game, Tigr* screen){
+    shutdown_audio(&game->gameOverAudio);
+    shutdown_audio(&game->audio);
+    shutdown_audio(&game->foodAudio);
+    shutdown_audio(&game->boomAudio);
+    shutdown_audio(&game->specialFoodAudio);
+    tigrFree(screen);
 }

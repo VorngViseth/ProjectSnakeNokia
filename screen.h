@@ -18,4 +18,6 @@ void gameOver(Game* game, Tigr* screen);
 
 void initGame(Tigr* screen, Game* game);
 
+void cleanUpGame(Game* game, Tigr* screen);
+
 #endif

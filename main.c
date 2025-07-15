@@ -50,10 +50,6 @@ int main() {
         tigrUpdate(screen);
     }
 
-    shutdown_audio(&game.audio);
-    shutdown_audio(&game.foodAudio);
-    shutdown_audio(&game.boomAudio);
-    shutdown_audio(&game.specialFoodAudio);
-    free(screen);
+    cleanUpGame(&game, screen);
     return 0;
 }
