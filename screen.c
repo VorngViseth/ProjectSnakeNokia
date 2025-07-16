@@ -128,12 +128,8 @@ void initGame(Tigr* screen, Game* game ){
     init_audio(&game->specialFoodAudio);
     init_audio(&game->gameOverAudio);
 
-    //default snake color
-    game->color1 = tigrRGB(255, 0, 0);
-    game->color2 = tigrRGB(0, 128, 128);
-
-    snakeInit(&game->snake1, game->color1, centerX - 5, centerY, &game->dir1);
-    snakeInit(&game->snake2, game->color2, centerX + 5, centerY, &game->dir2);
+    snakeInit(&game->snake1, game->snake1.color, centerX - 5, centerY, &game->dir1);
+    snakeInit(&game->snake2, game->snake2.color, centerX + 5, centerY, &game->dir2);
 
     game->originalDelay = game->snake1.delay;
 }
@@ -278,7 +274,7 @@ void chooseColor(Game* game , Tigr* screen){
 
     float scale = 5.0f; // Adjust this value to make text bigger or smaller
 
-    drawScaledText(screen, tfont, 150, 80, game->color1,            scale, "Player1");
+    drawScaledText(screen, tfont, 150, 80, game->snake1.color,            scale, "Player1");
     drawScaledText(screen, tfont, 100, 180, tigrRGB(255, 0, 0),     scale, "1 - Red");
     drawScaledText(screen, tfont, 100, 240, tigrRGB(0, 255, 0),     scale, "2 - Green");
     drawScaledText(screen, tfont, 100, 300, tigrRGB(0, 0, 255),     scale, "3 - Blue");
@@ -290,7 +286,7 @@ void chooseColor(Game* game , Tigr* screen){
     drawScaledText(screen, tfont, 100, 660, tigrRGB(0, 255, 255),   scale, "9 - Cyan");
     drawScaledText(screen, tfont, 100, 720, tigrRGB(255, 105, 180), scale, "0 - Pink");
 
-    drawScaledText(screen, tfont, 600, 80, game->color2,            scale, "Player2");
+    drawScaledText(screen, tfont, 600, 80, game->snake2.color,            scale, "Player2");
     drawScaledText(screen, tfont, 550, 180, tigrRGB(0, 128, 128),   scale, "Q - Teal");
     drawScaledText(screen, tfont, 550, 240, tigrRGB(173, 255, 47),  scale, "W - Lime");
     drawScaledText(screen, tfont, 550, 300, tigrRGB(128, 0, 0),     scale, "E - Maroon");
@@ -305,26 +301,26 @@ void chooseColor(Game* game , Tigr* screen){
     drawScaledText(screen, tfont, 300, 850, tigrRGB(255, 255, 255),    scale, "ESC - to exit");
 
 
-    if (tigrKeyHeld(screen, '1')) game->color1 = tigrRGB(255, 0, 0);          // Red
-    else if (tigrKeyHeld(screen, '2')) game->color1 = tigrRGB(0, 255, 0);     // Green
-    else if (tigrKeyHeld(screen, '3')) game->color1 = tigrRGB(0, 0, 255);     // Blue
-    else if (tigrKeyHeld(screen, '4')) game->color1 = tigrRGB(255, 255, 0);   // Yellow
-    else if (tigrKeyHeld(screen, '5')) game->color1 = tigrRGB(128, 0, 128);   // Purple
-    else if (tigrKeyHeld(screen, '6')) game->color1 = tigrRGB(255, 165, 0);   // Orange
-    else if (tigrKeyHeld(screen, '7')) game->color1 = tigrRGB(255, 255, 255); // White
-    else if (tigrKeyHeld(screen, '8')) game->color1 = tigrRGB(128, 128, 128); // Gray
-    else if (tigrKeyHeld(screen, '9')) game->color1 = tigrRGB(0, 255, 255);   // Cyan
-    else if (tigrKeyHeld(screen, '0')) game->color1 = tigrRGB(255, 105, 180); // Pink
-    else if (tigrKeyHeld(screen, 'Q') || tigrKeyHeld(screen, 'q')) game->color2 = tigrRGB(0, 128, 128);       // Teal
-    else if (tigrKeyHeld(screen, 'W') || tigrKeyHeld(screen, 'w')) game->color2 = tigrRGB(173, 255, 47);      // Lime
-    else if (tigrKeyHeld(screen, 'E') || tigrKeyHeld(screen, 'e')) game->color2 = tigrRGB(128, 0, 0);         // Navy Blue
-    else if (tigrKeyHeld(screen, 'R') || tigrKeyHeld(screen, 'r')) game->color2 = tigrRGB(0, 0, 128);         // Maroon
-    else if (tigrKeyHeld(screen, 'T') || tigrKeyHeld(screen, 't')) game->color2 = tigrRGB(255, 215, 0);       // Gold
-    else if (tigrKeyHeld(screen, 'Y') || tigrKeyHeld(screen, 'y')) game->color2 = tigrRGB(135, 206, 235);     // Sky Blue
-    else if (tigrKeyHeld(screen, 'U') || tigrKeyHeld(screen, 'u')) game->color2 = tigrRGB(128, 128, 0);       // Olive
-    else if (tigrKeyHeld(screen, 'I') || tigrKeyHeld(screen, 'i')) game->color2 = tigrRGB(255, 127, 80);      // Coral
-    else if (tigrKeyHeld(screen, 'O') || tigrKeyHeld(screen, 'o')) game->color2 = tigrRGB(250, 128, 114);     // Salmon
-    else if (tigrKeyHeld(screen, 'P') || tigrKeyHeld(screen, 'p')) game->color2 = tigrRGB(75, 0, 130);        // Indigo
+    if (tigrKeyHeld(screen, '1')) game->snake1.color = tigrRGB(255, 0, 0);          // Red
+    else if (tigrKeyHeld(screen, '2')) game->snake1.color = tigrRGB(0, 255, 0);     // Green
+    else if (tigrKeyHeld(screen, '3')) game->snake1.color = tigrRGB(0, 0, 255);     // Blue
+    else if (tigrKeyHeld(screen, '4')) game->snake1.color = tigrRGB(255, 255, 0);   // Yellow
+    else if (tigrKeyHeld(screen, '5')) game->snake1.color = tigrRGB(128, 0, 128);   // Purple
+    else if (tigrKeyHeld(screen, '6')) game->snake1.color = tigrRGB(255, 165, 0);   // Orange
+    else if (tigrKeyHeld(screen, '7')) game->snake1.color = tigrRGB(255, 255, 255); // White
+    else if (tigrKeyHeld(screen, '8')) game->snake1.color = tigrRGB(128, 128, 128); // Gray
+    else if (tigrKeyHeld(screen, '9')) game->snake1.color = tigrRGB(0, 255, 255);   // Cyan
+    else if (tigrKeyHeld(screen, '0')) game->snake1.color = tigrRGB(255, 105, 180); // Pink
+    else if (tigrKeyHeld(screen, 'Q') || tigrKeyHeld(screen, 'q')) game->snake2.color = tigrRGB(0, 128, 128);       // Teal
+    else if (tigrKeyHeld(screen, 'W') || tigrKeyHeld(screen, 'w')) game->snake2.color = tigrRGB(173, 255, 47);      // Lime
+    else if (tigrKeyHeld(screen, 'E') || tigrKeyHeld(screen, 'e')) game->snake2.color = tigrRGB(128, 0, 0);         // Navy Blue
+    else if (tigrKeyHeld(screen, 'R') || tigrKeyHeld(screen, 'r')) game->snake2.color = tigrRGB(0, 0, 128);         // Maroon
+    else if (tigrKeyHeld(screen, 'T') || tigrKeyHeld(screen, 't')) game->snake2.color = tigrRGB(255, 215, 0);       // Gold
+    else if (tigrKeyHeld(screen, 'Y') || tigrKeyHeld(screen, 'y')) game->snake2.color = tigrRGB(135, 206, 235);     // Sky Blue
+    else if (tigrKeyHeld(screen, 'U') || tigrKeyHeld(screen, 'u')) game->snake2.color = tigrRGB(128, 128, 0);       // Olive
+    else if (tigrKeyHeld(screen, 'I') || tigrKeyHeld(screen, 'i')) game->snake2.color = tigrRGB(255, 127, 80);      // Coral
+    else if (tigrKeyHeld(screen, 'O') || tigrKeyHeld(screen, 'o')) game->snake2.color = tigrRGB(250, 128, 114);     // Salmon
+    else if (tigrKeyHeld(screen, 'P') || tigrKeyHeld(screen, 'p')) game->snake2.color = tigrRGB(75, 0, 130);        // Indigo
 
     else if (tigrKeyHeld(screen, TK_ESCAPE)) {
         

@@ -17,9 +17,12 @@ int main() {
 
     init_audio(&game.audio);
     game.bmg_play = false;
-
     
     initGame(screen, &game);
+
+    //default snake color
+    game.snake1.color = tigrRGB(255, 0, 0);
+    game.snake2.color = tigrRGB(0, 128, 128);
     
     while(!tigrClosed(screen)){
         game.deltaTime = tigrTime();
