@@ -60,7 +60,6 @@ typedef struct {
     float boomSpawnTimer;
     float specialFoodspawnTimer;
     float originalDelay;
-    TPixel color1, color2;
 } Game;
 
 #endif
