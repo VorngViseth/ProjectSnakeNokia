@@ -31,7 +31,6 @@ typedef struct {
     int direction;
     int newDirection;
     TPixel color;
-    int health;
     int score;
     bool alive;
     bool moved;
