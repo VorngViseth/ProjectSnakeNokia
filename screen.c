@@ -139,7 +139,7 @@ void initGame(Tigr* screen, Game* game ){
 void menuState(Tigr* screen, GameState* gameState) {
     tigrClear(screen, tigrRGB(0,0,0));
 
-    Tigr* menuPicture = tigrLoadImage("asset/snakeMenu.png");
+    Tigr* menuPicture = tigrLoadImage("asset/SnakeMenu.png");
     
     int x = (screen->w - menuPicture->w) / 2;
     int y = (screen->h - menuPicture->h) / 2;
