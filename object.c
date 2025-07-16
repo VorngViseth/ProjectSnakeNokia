@@ -85,7 +85,7 @@ void eatFood(Object* food, Snake* snake, Game* game) {
 
 void eatBoom(Game* game, Object* boom, Snake* snake) {
     if(snake->body[0].x == boom->objPosition.x && snake->body[0].y == boom->objPosition.y){
-        snake->score -= 3;
+        snake->score = (snake->score-3 > 0) ? snake->score-3 : 0;
         snake->length -= 3;
         boom->eaten = true;
         if(!game->bmg_boom_play) {
@@ -94,7 +94,7 @@ void eatBoom(Game* game, Object* boom, Snake* snake) {
             play_bgm(&game->boomAudio, "asset/eatbombsoundeffect.mp3");
             game->bmg_boom_play = true;
         }
-        if(snake->length < 3 && snake->score < 0) {
+        if(snake->length < 3 || snake->score < 0) {
             snake->alive = false;
             game->gameState = GAME_OVER;
         }
