@@ -53,12 +53,12 @@ void placeObject(Game* game) {
 
     if(game->boomSpawnTimer <= 0 && game->boom.eaten) {
         initObject(&game->boom, game);
-        game->boomSpawnTimer = rand()%20 + 10;
+        game->boomSpawnTimer = rand()%10 + 10;
     }
 
     if(game->specialFoodspawnTimer <= 0 && game->specialFood.eaten){
         initObject(&game->specialFood, game);
-        game->specialFoodspawnTimer = rand()%20 + 10;
+        game->specialFoodspawnTimer = rand()%10 + 10;
     }
 
     if(game->bmg_food_play) game->bmg_food_play = false;

@@ -95,7 +95,6 @@ void snakeProperty(Snake* snake) {
     if(!snake->alive) return;
 
     snake->direction = snake->newDirection;
-    snake->moved = true;
 
     for(int i = snake->length-1; i > 0; i--) snake->body[i] = snake->body[i-1];
 
